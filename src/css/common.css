@@ -1,0 +1,403 @@
+html,body,div,span,p,ul,li,img{
+	padding:0;
+	margin:0;
+}
+input[type="text"],textarea{
+  box-shadow:none;
+  -webkit-appearance: none;
+  /*-webkit-appearance:none;*/
+  /*font-size:inherit;*/
+}
+a,input{
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+input,textarea,button{
+  outline:none;
+  /*-webkit-appearance:none;*/
+  /*font-size:inherit;*/
+}
+button{
+  border:0;
+}
+div,p,h3,span,ul,li{
+  font-size:.12rem;
+}
+
+.clearfix:after{
+  content:'';
+  display:block;
+  clear:both;
+  visibility:hidden;
+  width:0;
+  height:0;
+}
+/*默认地址弹窗*/
+/* 温馨提示弹窗  */
+.tip_modal_wrapper{
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.1);
+}
+.tip_modal{
+  margin:2.5rem auto 0;
+  width:5.6rem;
+  height:3.86rem;
+  background:#fff;
+}
+.tip_modal_title{
+  display:block;
+  width:100%;
+  height:.9rem;
+  line-height:.9rem;
+  font-size:.34rem;
+  color:#222126;
+  background:#fff6f5;
+  text-align:center;
+}
+.tip_info{
+  margin:.2rem auto 0;
+  display:block;
+  width:3.8rem;
+  line-height:.34rem;
+  font-size:.24rem;
+  text-align:left;
+  color:#000;
+}
+.usually_area{
+  margin:.1rem auto 0;
+  padding-top:.2rem;
+  width:3.8rem;
+  height:1.1rem;
+  box-sizing: border-box;
+}
+.usually_area img{
+  margin-top:.06rem;
+  margin-right:.2rem;
+  float:left;
+  width:.24rem;
+  height:.28rem;
+}
+.usually_area span{
+  float:left;
+  width:3.3rem;
+  font-size:.28rem;
+  line-height:.38rem;
+  color:#dc4831;
+  text-align:left;
+}
+.usually_area span:nth-of-type(2){
+	text-indent:.44rem;
+}
+.tip_modal_btns{
+  margin:0 auto;
+  width:2.2rem;
+}
+.tip_modal_btns button{
+  float:left;
+  width:1rem;
+  height:.6rem;
+  line-height:.6rem;
+  font-size:.26rem;
+  border:0;
+  border-radius:5px;
+}
+.tip_modal_btns .btn_cancel{
+  color:#a1a1a1;
+  margin-right:.2rem;
+}
+.tip_modal_btns .btn_sure{
+  color:#fff;
+  background:#dc4831;
+}
+
+/* 加载失败  */
+.load_fail_wrapper{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+}
+.load_fail_wrapper img{
+  display:block;
+  margin:1.60rem auto 0;
+  width:4.20rem;
+  height:4.20rem;
+}
+.load_fail_wrapper span{
+  display:block;
+  width:100%;
+  height:1.20rem;
+  line-height:1.20rem;
+  font-size:.40rem;
+  text-align:center;
+  color:#363636;
+}
+.load_fail_wrapper .load_again{
+  margin:0 auto;
+  width:2.00rem;
+  height:.60rem;
+  background:#db4430;
+  color:#fff;
+  font-size:.26rem;
+  line-height:.60rem;
+  border-radius:.10rem;
+  text-align:center;
+}
+
+/* 新手指南  */
+.help_wrapper{
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  overflow: scroll;
+}
+.help_wrapper .img_step{
+  display:block;
+  margin:.10rem auto 0;
+  width:6.74rem;
+  height:8.02rem;
+}
+.help_info .help_list{
+  margin:.40rem auto 0;
+  width:6.00rem;
+  font-size:.28rem;
+  line-height:.44rem;
+  color:#626262;
+}
+.help_info .help_list .left{
+  float:left;
+  width:.40rem;
+}
+.help_info .help_list .right{
+  float:left;
+  width:5.60rem;
+  text-align:left;
+}
+.checkbox_label{
+  margin:.20rem auto 0;
+  width:2.20rem;
+  height:.50rem;
+  line-height:.50rem;
+  font-size:.24rem;
+  color:#6e6e6e;
+  text-align:center;
+}
+.checkbox_label checkbox{
+  float:left;
+}
+.checkbox_label checkbox .wx-checkbox-input,
+.checkbox_label .wx-checkbox-input.wx-checkbox-input-checked{
+  width:.30rem;
+  height:.30rem;
+}
+.checkbox_label span{
+  float:left;
+  height:.50rem;
+  line-height:50rem;
+}
+.help_close{
+  margin:.50rem auto;
+  width:1.70rem;
+  height:.60rem;
+  color:#dc5248;
+  border:1px solid #dc5248;
+  font-size:.30rem;
+  line-height:.60rem;
+}
+.help_close image{
+  width:.66rem;
+  height:.66rem;
+}
+
+/* 开箱进度  */
+.open_door_progress{
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(255,255,255,.5);
+}
+.progress_wrapper{
+	position:relative;
+	margin:.1rem auto 0;
+	width:4.9rem;
+	height:.18rem;
+	border-radius:.1rem;
+	background:#000;
+}
+.progress{
+  position:absolute;
+  height:.18rem;
+  border-radius:.1rem;
+  background:#f03f41;
+  /*margin:.20rem auto 0;
+  width:4.90rem;
+  height:.18rem;
+  background:#000;*/
+}
+.open_door_title{
+  margin-top:2.00rem;
+  width:100%;
+  height:1.26rem;
+  line-height:1.26rem;
+  color:#000;
+  text-align:center;
+  font-size:.30rem;
+}
+.progress_precent{
+  width:100%;
+  height:.50rem;
+  line-height:.50rem;
+  color:#000;
+  font-size:.30rem;
+  text-align:center;
+}
+
+/* 开箱指南  */
+.open_door_help_wrapper{
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.1);
+}
+.open_door_help{
+  margin:2.1rem auto 0;
+  width:5.9rem;
+  height:4.3rem;
+  background:#fff;
+}
+.open_door_help_title{
+  display:block;
+  width:100%;
+  height:.76rem;
+  line-height:.76rem;
+  background:#004c9e;
+  color:#fff;
+  text-align:center;
+  font-size:.3rem;
+}
+.open_door_help img{
+  width:5.9rem;
+  height:2.5rem;
+}
+.open_door_help_btn{
+  display:block;
+  margin:0 auto;
+  width:1.5rem;
+  height:.6rem;
+  border:1px solid #447bb7;
+  background:#fff;
+  color:#447bb7;
+  border-radius:.1rem;
+  font-size:.3rem;
+  line-height:.6rem;
+}
+/*头部*/
+.padding225{
+  width:100%;
+  height:.8rem;
+}
+.comm_header{
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:.8rem;
+  line-height:.8rem;
+  font-size:.36rem;
+  color:#000;
+  text-align:center;
+  background:#f0f0f0;
+  z-index:1000;
+}
+.comm_header img.back{
+  position:absolute;
+  padding:.2rem;
+  left:.1rem;
+  top:0;
+  width:.3rem;
+  height:.4rem;
+}
+/* 活动帮助弹窗 */
+.act_help_modal_wrapper{
+  position:fixed;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.5);
+}
+.act_help_modal_wrapper .act_rule_step{
+  display:block;
+  margin:.1rem auto 0;
+  width:6rem;
+  height:10rem;
+}
+.act_help_modal_wrapper .act_know{
+  display:block;
+  margin:.5rem auto 0;
+  width:2rem;
+  height:.6rem;
+}
+/* 帮助 */
+.help_modal_wrapper{
+  position:fixed;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.5);
+}
+.help_cont{
+  padding-bottom:.40rem;
+  margin:2.50rem auto 0;
+  width:6.40rem;
+  background:#fff;
+  border-radius:.20rem;
+}
+.help_cont .help_heade{
+  padding:.30rem .70rem 0;
+  display:block;
+  width:100%;
+  height:1.66rem;
+  line-height:1.36rem;
+  font-size:.36rem;
+  color:#000;
+  box-sizing:border-box;
+}
+.help_cont .help_intro{
+  display:block;
+  padding:0 .70rem;
+  width:100%;
+  box-sizing:border-box;
+  font-size:.28rem;
+  line-height:.50rem;
+  color:#1d1d1d;
+  text-align:left;
+}
+.help_cont .help_btn{
+  margin:.40rem auto 0;
+  width:5.00rem;
+  height:.80rem;
+  line-height:.80rem;
+  font-size:.32rem;
+  color:#fff;
+  background:#ff9900;
+  border-radius:.10rem;
+  letter-spacing:.15rem;
+}
