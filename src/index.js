@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter,Route  } from 'react-router-dom';
 import './index.css';
-import 'zent/css/index.css';
+// import 'zent/css/index.css';
 import './css/common.css';
 import './js/fontSize.js';
 // import App from './App';
@@ -16,6 +16,8 @@ import Result from './components/result/result.js';
 import MyActs from './components/myActs/myActs.js';
 import { Provider, connect } from 'react-redux';
 import store from './reducer/store.js';
+
+import 'semantic-ui-css/semantic.min.css';
 // import fuApp from './js/libs/fuapp.js';
 // window.fuApp = fuApp;
 // 注册事件，调原生接口必用
