@@ -256,6 +256,17 @@
   	flex:1;
   	text-align:left;
 }
+.bnyp_goods .bnyp_good .bnyp_left .bnyp_good_name .bnyp_good_discount{
+  float:left;
+  margin-top:.05rem;
+  margin-right:5px;
+  padding:0 .1rem;
+  height:.26rem;
+  line-height:.26rem;
+  font-size:.2rem;
+  color:#fff;
+  background:linear-gradient(to right,#ff8f24,#ff7f1f,#ff6818);
+}
 .bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_nums{
   	margin-top:.30rem;
   	width:100%;

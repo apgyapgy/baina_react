@@ -1,9 +1,12 @@
 import React,{ Component } from 'react';
-import {showConfirm,loadCordova} from '../../js/public.js';
+import {loadCordova,saveOperate,jumpH5Page} from '../../js/public.js';
 import {connect} from 'react-redux';
 import store from '../../reducer/store.js';
 import {setLoginId,setFrom,setLoaded} from '../../reducer/plan.js';
 import fuApp from '../../js/libs/fuapp.js';
+import {$} from 'jquery';
+import { Button, Modal } from 'semantic-ui-react';
+import { browserHistory } from 'react-router-dom';
 
 import './index.css';
 
@@ -38,11 +41,14 @@ function Banner(props){//banner  v-if="bannerAct" props.bannerAct.actId,props.ba
 	)
 }
 function Acts(props){//活动列表
+	const cliBtn = (idx,actId,usrActSt)=>{
+		return ()=>{ props.cliBtn(idx,actId,usrActSt);}
+	}
 	return(
 		<div className='acts clearfix'>
 			{
 				props.activityList.map((item,index) =>
-			        <div className='act' key={index} onClick={props.cliBtn(index,item.actId,item.usrActSt)}>
+			        <div className='act' key={index} onClick={cliBtn(index,item.actId,item.usrActSt)}>
 			        	<img className='act_good_img' src={props.imgPre+(item.usrActSt==4||item.usrActSt==5?item.bainaGoods.goodsImgLogo2:item.bainaGoods.goodsImgLogo3)}/>
 			        	<img className='act_status' src={require('./'+item.stUrl)} />
 
@@ -56,20 +62,6 @@ function Acts(props){//活动列表
 		    }
 		</div>
 	)
-	/*
-	
-	<div className='acts clearfix'>
-	  <div className='act' v-for="(item,idx) in activityList" @click="cliBtn(idx,item.actId,item.usrActSt)">
-	      <img className='act_good_img' :src="item.usrActSt==4||item.usrActSt==5?imgPre+item.bainaGoods.goodsImgLogo2: imgPre+item.bainaGoods.goodsImgLogo3"/>
-	      <img className='act_status' :src="'./static/images/'+item.stUrl"/>
-	      <span className='act_name'>{item.actNm}</span>
-	      <div className='act_nums'>
-	        <span className='act_left'>剩余{{item.goodsNumLeft}}份</span>
-	        <span className='act_apply_nums'>{item.virtualApplyNum}人申请</span>
-	      </div>
-	  </div>
-	</div>
-	*/
 }
 class Index extends Component{
 	constructor(props){
@@ -118,6 +110,8 @@ class Index extends Component{
 		}
 	}
 	componentDidMount(){
+		// $('.ui.modal').modal('show',()=>{console.log("aaa")},()=>{console.log("bbb")})
+;
 	}
 	initData(){
 		var _this = this;
@@ -554,11 +548,79 @@ class Index extends Component{
 	chooseAddress(){}
 	cliBanner(){}
 	toMyActs(){}
-	cliBtn(idx,actId,usrActSt){
-		console.log("cliBtn:",idx,actId,usrActSt);
+	cliBtn(idx,actId,actSt){
+		console.log("cliBtn:",idx,actId,actSt);
+		//st:0即将开始,1进行中,2待配送,3已配送,4已领取,5已结束
+	    //1立即申请;0 2去看看;3扫码开箱;4 5商品抢购
+	    var _st = actSt;//用户参与活动的状态
+	    var _aid = actId;//活动id
+	    var _idx = idx;//点第几个
+	    saveOperate(this, 'h5_活动小图-位置：'+(_idx+1)+',活动id:'+_aid);
+	    //按钮为"去看看","立即申请",'扫码开箱'跳转活动页面
+	    if (_st == 0 || _st == 1 || _st == 3){
+	    	var _path = '/activity?aid='+_aid;
+	    	// hashHistory.push(_url);
+	    	browserHistory.push(_path);
+	    }else if(_st == 2){//待配送,跳结果页
+	      	var _aid = this.state.activityList[_idx].actId;
+	      	var _url = this.state.activityList[_idx].applySuccUrl;
+	      	var _path = '/result?aid='+_aid+'&tp=5';
+	      	browserHistory.push(_path);
+	    }else if(_st==4||_st==5){//已结束和已领取，跳有赞页面
+	    	var _url = this.state.activityList[_idx].bainaGoods.goodsSellLink;
+	      	jumpH5Page(this,_url);
+	    }
+	}
+	callback(msg){
+        console.log("msg:",msg);
+    }
+    bnypJumpYz(idx){
+    	console.log("bnypJumpYz:",idx);
+    }
+    createBnyp(){//创建白拿优品
+    	const bnypList = [];
+    	this.state.bnypList.map((item,index)=>{
+    		bnypList.push(
+    			<div className='bnyp_good clearfix' key={index} onClick={()=>{this.bnypJumpYz(index)}} >
+			      	<div className='bnyp_left clearfix'>
+				        <div className='bnyp_good_name clearfix'>
+				        	{
+				        		item.goodsSale!=0&&item.goodsSale!=100?
+				        		<span className='bnyp_good_discount'>{item.goodsSale/10}折</span>:''
+				        	}
+				          	<span className='bnyp_good_name_1'>{item.goodsNm}</span>
+				        </div>
+				        <div className='bnyp_good_nums'>
+			          		<span className='bnyp_good_price'>售价：<b>￥{item.discountAmt}</b></span>
+			          		{
+			          			item.goodsSale!=0&&item.goodsSale!=100?
+			          			<span className='bnyp_good_origin_price'>￥{item.goodsAmt}</span>
+			          			:''
+			          		}
+			        	</div>
+			      	</div>
+			      	<img className='bnyp_img' src={this.state.imgPre+item.goodsImgSmall}/>
+			    </div>		
+    		)
+    	})
+    	return bnypList;
+    }
+
+    showHelpModal() {//显示帮助弹窗
+		var _this = this;
+	    // showAlert({
+	    // 	title:'温馨提示',
+	    // 	cont:'请选择您的小区',
+	    // 	confirm(){
+	    // 		_this.$router.push({path:'/address'});
+	    // 	}
+	    // });
+	}
+	closeHelpModal(){
+		this.setState({showHelpFlag : false});
 	}
 	render(){
-		return(
+		return (
 			<div>
 				<Header bindAddr={this.state.bindAddr} chooseAddress={this.chooseAddress.bind(this)}/>
 				{
@@ -570,8 +632,19 @@ class Index extends Component{
 					this.state.activityList.length?
 						<Acts imgPre={this.state.imgPre} 
 							  activityList={this.state.activityList} 
-							  cliBtn={this.cliBtn}
+							  cliBtn={this.cliBtn.bind(this)}
 					    />:''
+				}
+				{
+					this.state.bnypList.length?
+					<div className='bnyp_wrapper clearfix'>
+						<div className='bnyp_head'>
+							<img src={require('./bnyp.png')}/>
+						</div>
+						<div className='bnyp_goods clearfix'>
+							{this.createBnyp()}
+						</div>
+					</div>:''
 				}
 			</div>
 		)

@@ -1,16 +1,14 @@
+import React from 'react'
+import { Button, Modal } from 'semantic-ui-react'
 // import { Dialog,Button} from 'zent';
 // const { openDialog, closeDialog } = Dialog;
 var ShowConfirm = function(cont,fn){
-	// const id = 'my_dialog';
-	// openDialog({
-	//     dialogId: id, // id is used to close the dialog
-	//     title: '提示',
-	//     children: <div>{{cont}}</div>,
-	//     footer: <Button onClick={() => closeDialog(id)}>关闭</Button>,
-	//     onClose() {
-	//       console.log('outer dialog closed');
-	//     },
-	// });
+	// <Modal
+	//     trigger={<Button>提示</Button>} 
+	//     header='提示' 
+	//     content={cont} 
+	//     actions={['取消', { key: 'done', content: '确定', positive: true }]}
+	// />
 }
 var loadCordova = function(obj,fn){
   	var _cordovaScript = document.getElementById("cordova");
@@ -42,5 +40,6 @@ var loadCordova = function(obj,fn){
       	}
     }
 }
-
-export {ShowConfirm,loadCordova}
+var saveOperate = function(obj,info){}
+var jumpH5Page = function(obj,url){}
+export {ShowConfirm,loadCordova,saveOperate,jumpH5Page}
