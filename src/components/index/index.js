@@ -4,9 +4,7 @@ import {connect} from 'react-redux';
 import store from '../../reducer/store.js';
 import {setLoginId,setFrom,setLoaded} from '../../reducer/plan.js';
 import fuApp from '../../js/libs/fuapp.js';
-import {$} from 'jquery';
 import { Button, Modal } from 'semantic-ui-react';
-import { browserHistory } from 'react-router-dom';
 
 import './index.css';
 
@@ -555,28 +553,45 @@ class Index extends Component{
 	    var _st = actSt;//用户参与活动的状态
 	    var _aid = actId;//活动id
 	    var _idx = idx;//点第几个
-	    saveOperate(this, 'h5_活动小图-位置：'+(_idx+1)+',活动id:'+_aid);
 	    //按钮为"去看看","立即申请",'扫码开箱'跳转活动页面
 	    if (_st == 0 || _st == 1 || _st == 3){
 	    	var _path = '/activity?aid='+_aid;
-	    	// hashHistory.push(_url);
-	    	browserHistory.push(_path);
+	    	this.props.history.push(_path);
 	    }else if(_st == 2){//待配送,跳结果页
 	      	var _aid = this.state.activityList[_idx].actId;
 	      	var _url = this.state.activityList[_idx].applySuccUrl;
 	      	var _path = '/result?aid='+_aid+'&tp=5';
-	      	browserHistory.push(_path);
+	      	this.props.history.push(_path);
 	    }else if(_st==4||_st==5){//已结束和已领取，跳有赞页面
 	    	var _url = this.state.activityList[_idx].bainaGoods.goodsSellLink;
+	      	jumpH5Page(this,_url);
+	    }
+	}
+	cliBanner(actId,actSt){//点击banner活动
+	    //st:0即将开始,1进行中,2待配送,3已配送,4已领取,5已结束
+	    //1立即申请;0 2去看看;3扫码开箱;4 5商品抢购
+	    var _st = actSt;//用户参与活动的状态
+	    var _aid = actId;//活动id
+	    //按钮为"去看看","立即申请",'扫码开箱'跳转活动页面
+	    if (_st == 0 || _st == 1 || _st == 3) {
+	    	var _path = '/activity?aid='+_aid;
+	    	this.props.history.push(_path);
+	    } else if (_st == 2) {//待配送,跳结果页
+	    	var _path = '/result?tp=5&aid='+_aid;
+	    	this.props.history.push(_path);
+	    } else if (_st == 4 || _st == 5) {//已结束和已领取，跳有赞页面
+	      	var _url = this.state.bannerAct.bainaGoods.goodsSellLink;
 	      	jumpH5Page(this,_url);
 	    }
 	}
 	callback(msg){
         console.log("msg:",msg);
     }
-    bnypJumpYz(idx){
-    	console.log("bnypJumpYz:",idx);
-    }
+    bnypJumpYz(idx){//白拿优品跳转有赞
+		var _url = this.state.bnypList[idx].linkAddress;
+		var _aid = this.state.bnypList[idx].goodsNo;
+	    jumpH5Page(this,_url);
+	}
     createBnyp(){//创建白拿优品
     	const bnypList = [];
     	this.state.bnypList.map((item,index)=>{
@@ -605,7 +620,29 @@ class Index extends Component{
     	})
     	return bnypList;
     }
-
+    chooseAddress(){//跳转到选择地址页面
+	    //this.setData({ showAddressModalFlag:false});
+	    if (this.state.bindAddr.cellCd != '' && this.state.bindAddr.cellCd != undefined && this.state.bindAddr.cityCd != '' && this.state.bindAddr.cityCd != undefined) {
+	      	var _path = '/address?cellCe='+this.state.bindAddr.cellCd+'&cityName='+this.state.bindAddr.cityNm;
+	      	_path+='&cityCd='+this.state.bindAddr.cityCd+'&cellNm='+this.state.bindAddr.areaNm+'&hostId='+this.state.bindAddr.hostId;
+	      	this.props.history.push(_path);
+	      	// this.$router.push({
+	      	// 	path:'/address',
+	      	// 	query:{
+	      	// 		cellCd:this.bindAddr.cellCd,
+	      	// 		cityName:this.bindAddr.cityNm,
+	      	// 		cityCd:this.bindAddr.cityCd,
+	      	// 		cellNm:this.bindAddr.areaNm,
+	      	// 		hostId:this.bindAddr.hostId
+	      	// 	}
+	      	// });
+	    }else{
+	    	this.props.history.push('/address');
+	    }
+	}
+	toMyActs(){//跳转到我的白拿页面
+    	this.props.history.push('/myActs');
+    }
     showHelpModal() {//显示帮助弹窗
 		var _this = this;
 	    // showAlert({
@@ -619,13 +656,37 @@ class Index extends Component{
 	closeHelpModal(){
 		this.setState({showHelpFlag : false});
 	}
+	closeRecommendModal(){//关闭优选商品推荐
+    	this.setState({showRecommendFlag:false});
+	    this.changeRecommendFlag();
+	}
+	toRecommendGood(e){//点击推荐商品领券按钮
+  		this.setState({showRecommendFlag:false});
+	    this.changeRecommendFlag();//修改弹窗状态，下次不显示
+	    var _url = this.state.recommendGood.actOpenUrl;
+	    jumpH5Page(this,_url);
+  	}
+  	changeRecommendFlag(){//点击关闭或领券修改弹窗状态
+	    var _this  = this;
+	    // getAjax({
+	    //   	url: 'bainaH5/updatePopRecord',
+	    //   	params: {
+	    //     	loginId: _this.$store.state.loginId,
+	    //     	orderNo: _this.recommendGood.orderNo
+	    //   	},
+	    //   	notShowLoading:true,
+	    //   	success(res) {
+	    //     	console.log("updatePopRecord:",res);
+	    //   	}
+	    // });
+	}
 	render(){
 		return (
 			<div>
 				<Header bindAddr={this.state.bindAddr} chooseAddress={this.chooseAddress.bind(this)}/>
 				{
 					this.state.bannerAct?
-					<Banner imgPre={this.state.imgPre} bannerAct={this.state.bannerAct} cliBanner={this.cliBanner} />
+					<Banner imgPre={this.state.imgPre} bannerAct={this.state.bannerAct} cliBanner={()=>{this.cliBanner}} />
 					:''
 				}
 				{
