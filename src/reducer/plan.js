@@ -20,6 +20,18 @@ export function setLoaded(item){
     item
   }
 }
+export function setModalFlag(flag){
+  return{
+    type:types.SETMODALFLAG,
+    flag
+  }
+}
+export function setModalCont(item){
+  return{
+    type:types.SETMODALCONT,
+    item
+  }
+}
 // 添加计划
 // export function addPlan(item) {
 //   return {

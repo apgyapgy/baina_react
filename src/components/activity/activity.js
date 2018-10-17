@@ -1,11 +1,11 @@
 import React,{ Component } from 'react';
-import {showConfirm,getParams,loadCordova,saveOperate,jumpH5Page,getDiffTime} from '../../js/public.js';
+import {showAlert,showConfirm,getParams,loadCordova,jumpH5Page,getDiffTime,getAjax} from '../../js/public.js';
 import {connect} from 'react-redux';
 import store from '../../reducer/store.js';
-import {setLoginId,setFrom,setLoaded} from '../../reducer/plan.js';
+import {setLoginId} from '../../reducer/plan.js';//setFrom,,setLoaded,setModalFlag
 import fuApp from '../../js/libs/fuapp.js';
 import './activity.css';
-import ConfirmExampleConfirm from '../common/confirm.js';
+// import ConfirmExampleConfirm from '../common/confirm.js';
 class Activity extends Component{
 	constructor(props){
 		super(props);
@@ -13,6 +13,11 @@ class Activity extends Component{
 			activityId:'',//首页传过来的活动id
 		    act:{},//活动信息
 		    area:{},//地址信息
+		    ques:{},//问题们
+		    actRecommandImg:'',
+		    showQuesModalFlag:false,//是否显示问题弹窗
+		    selectAnswIndex:0,//用户选择的问题答案
+		    showTrueAnswFlag:false,//是否显示正确答案
 		    hostId:'',//绑定终端号
 		    bannerImgs:[],//商品banner图片
 		    detailImgs:[],//商品详情图片
@@ -50,17 +55,16 @@ class Activity extends Component{
 		    imgPre:this.props.globalData.imgPre,//图片前缀
 		    loadFailFlag:false,//是否加载失败
 		    showActRuleModalFlag: false, //是否显示活动流程弹窗
-		    modalCont:'',//弹窗内容
-		    showModal:false,//是否显示弹窗
-		    showCancel:false,//是否显示取消按钮
 		    confirmFn:null,//弹窗点确认按钮的执行函数
 		    cancelFn:null,//弹窗点取消按钮的执行函数
 		};
 		this.initData = this.initData.bind(this);
+		this.getQues = this.getQues.bind(this);
+		this.changeMiddleTabbar = this.changeMiddleTabbar.bind(this);
 	}
 	checkPhoneTimer:null
 	activityTimer:null
-	componentDidMount(){
+	componentWillMount(){
 		var search = {};
 		if(this.props.location.search){
 			search = getParams(this.props.location.search);
@@ -68,34 +72,27 @@ class Activity extends Component{
 		var _this = this;
 		if(search.aid){
 			this.setState({
-				acitivityId:search.aid
+				activityId:search.aid
+			},function(){
+				if(this.props.globalData.loginId === ''){
+					loadCordova(this,this.initData);
+				}else{
+					this.initData();
+				}
 			});
-			if(this.props.globalData.loginId == ''){
-				loadCordova(this,this.initData);
-			}else{
-				this.initData();
-			}
 		}else{
 			showConfirm(this,'非法页面参数',()=>{
 				this.props.history.back();
 			});
 		}
-		showConfirm(_this,'测试测试',()=>{
-			console.log("aaa")
-			_this.setState({showModal:false});
-		},()=>{
-			console.log("bbb");
-			_this.setState({
-				showModal:false
-			});
-		});
 	}
 	initData(){
+		console.log("initData")
 		var _this = this;
-		if(this.props.globalData.loginId == ''){
+		if(this.props.globalData.loginId === ''){
 			fuApp.userInfo(function(userInfo){
 				console.log("userInfo:",userInfo);
-				if(userInfo.rspCode == '0000'){
+				if(userInfo.rspCode === '0000'){
 					store.dispatch(setLoginId(userInfo.loginId))
 				}
 		  		_this.toDetail();
@@ -109,141 +106,101 @@ class Activity extends Component{
 	}
 	toDetail(){
 		var _this = this;
-		saveOperate(this, 'h5_活动页-活动id:'+this.activityId);
-		var res = {
-			"code":200,
-			"data":{
-				"act":{
-					"actEndTs":"2018-07-02 00:00:00","actId":"1800000486",
-					"actNm":"Mings铭氏挂耳咖啡免费试喝",
-					"actOpenImg":"sys/o2o2/2018/06/25/o2oBainaActivity_473994786499353.jpg",
-					"actOpenLink":"https://h5.youzan.com/v2/ump/promocard/fetch?alias=ylgs1oci",
-					"actOpenUrl":"pages/usercenter/promotion/promotion_detail?type=promocard&id=2579035",
-					"actSt":1,"actStartTs":"2018-06-25 16:00:00",
-					"actWeight":986,"applyFailBt":"优惠购买",
-					"applyFailLink":"https://h5.youzan.com/v2/goods/3et36u91t84co",
-					"applyFailLogo":"sys/o2o2/2018/06/25/o2oBainaActivity_774732900799964.jpg",
-					"applyFailUrl":"pages/goods/detail/index?alias=2xaddcdto14lk",
-					"applySuccBt":"优惠购买","applySuccLink":"https://h5.youzan.com/v2/goods/3et36u91t84co",
-					"applySuccLogo":"sys/o2o2/2018/06/25/o2oBainaActivity_172305935098804.jpg",
-					"applySuccUrl":"pages/goods/detail/index?alias=2xaddcdto14lk",
-					"bainaGoods":{
-						"contact":"石俊","crtTs":"2018-06-21 19:10:35",
-						"goodsActLogo1":"sys/o2o2/2018/06/21/o2oGoods_493176240435351.jpg",
-						"goodsActLogo2":"sys/o2o2/2018/06/21/o2oGoods_194059897635283.jpg",
-						"goodsActLogo3":"sys/o2o2/2018/06/21/o2oGoods_193706050834731.jpg",
-						"goodsActLogo4":"sys/o2o2/2018/06/21/o2oGoods_177194367634893.jpg",
-						"goodsAmt":3979,
-						"goodsDtlLogo1":"sys/o2o2/2018/06/21/o2oGoods_888797816835623.jpg",
-						"goodsDtlLogo2":"sys/o2o2/2018/06/21/o2oGoods_768195080735553.jpg",
-						"goodsDtlLogo3":"sys/o2o2/2018/06/21/o2oGoods_191953110735486.jpg",
-						"goodsDtlLogo4":"sys/o2o2/2018/06/21/o2oGoods_658059696535419.jpg",
-						"goodsImgBig1":"","goodsImgBig2":"sys/o2o2/2018/06/21/o2oGoods_123397833635213.jpg",
-						"goodsImgBig3":"sys/o2o2/2018/06/21/o2oGoods_383590878335144.jpg",
-						"goodsImgLogo1":"sys/o2o2/2018/06/21/o2oGoods_118568423035046.jpg",
-						"goodsImgLogo2":"sys/o2o2/2018/06/21/o2oGoods_174301211635081.jpg",
-						"goodsImgLogo3":"sys/o2o2/2018/06/21/o2oGoods_173419112534961.jpg",
-						"goodsNm":"Mings铭氏挂耳咖啡","goodsNo":"5200000037","goodsSale":0,
-						"goodsSellLink":"https://h5.youzan.com/v2/goods/3et36u91t84co",
-						"goodsSellUrl":"pages/goods/detail/index?alias=2xaddcdto14lk",
-						"goodsTp":0,"id":51,"mchId":80000146,"mobile":"18516249201","operator":"",
-						"updTs":"1900-01-01 00:00:00"},"broadSuccess":true,"code":200,
-						"crtTs":"2018-06-25 15:55:00","deliveryNo":"70000008","desc":"成功",
-						"goodsNo":"5200000037","goodsNum":40,"goodsNumLeft":35,"id":175,"mchId":"80000146",
-						"onlineFlag":"上架","operator":"system","success":true,
-						"updTs":"2018-06-26 11:48:42","usrActSt":"1","usrActStDesc":"进行中",
-						"virtualApplyNum":0},"area":{"areaNm":"天安花园-2","areaNo":"A100014243",
-						"cityCd":"2900","cityNm":"上海市"
-					},
-					"broadSuccess":true,"code":200,"desc":"成功",
-					"success":true,
-					"usr":{
-						"appId":"wx5ad7257472438143","boundUser":false,
-						"city":"","country":"","headImgUrl":"","id":61135,"latestHostId":"",
-						"latestLat":"","latestLng":"","loginId":"13625625040",
-						"needGetAgainUserInfo":true,"nickNm":"","offlineCode":"",
-						"onlineCode":"","onlineCoupon":"","openId":"oUJ-84vffyRtURmS92NhRFxyBJf8",
-						"province":"60262872","rewardAmt":0,"sex":0,"unionId":"",
-						"userId":"","userNm":"","userSt":0,"userTp":0
-					}
-				},
-				"desc":"成功",
-				"success":true
-		};
-		if(res.code == 200){
-			_this.setState({
-				act : res.data.act,
-				area : res.data.area,
-				loadFailFlag : false,
-				hostId : res.data.usr ? res.data.usr.province:'',
-				hostId : res.data.usr ? res.data.usr.province:''
-			});
-	        _this.getActImgs();//处理返回的数据
-	        _this.checkCutDown();//判断是否进行倒计时
-	    } else if (res.code == 308){
-          	if(_this.state.act != {}){
-          		_this.setState({
-          			loadFailFlag:true
-          		});
-          	}
-	        showConfirm(_this,'很抱歉，您的附近暂无白拿活动，现在将为您跳转到白拿商城!',()=>{
-	        	_this.props.hostory.push('/mall');
-	        });
-	    }else{
-	        if(_this.act != {}) {
-	            _this.setState({loadFailFlag:true});
-	        }
-	        if (res.desc != '请先注册用户并选择好配送终端。'){
-	        	showConfirm(_this,res.desc);
-	        }
-	    }
-  		/*getAjax({
+		getAjax({
 			url:'bainaH5/toDetail',
 			params:{
-				loginId:_this.$store.state.loginId,
-				actId:_this.activityId
+				loginId:_this.props.globalData.loginId,
+				actId:_this.state.activityId,
+				type:1
 			},
 			success(res){
 				console.log("toDetail:",res);
-				if(res.code == 200){
-		          	_this.act=res.data.act;
-		            _this.area=res.data.area;
-		            _this.loadFailFlag=false;
-		            _this.hostId= res.data.usr ? res.data.usr.province:'';
+				if(res.code === 200){
+					var _quesArr = _this.getQues(res.data.goodsQuestion);
+					_this.setState({
+						act : res.data.act,
+						area : res.data.area,
+						loadFailFlag : false,
+						hostId : res.data.usr ? res.data.usr.province:'',
+						ques:_quesArr
+					});
+					if(res.data.act.usrActSt === 1){
+						_this.setState({canReceiveFlag:true});
+					}
 			        _this.getActImgs();//处理返回的数据
-			        _this.checkCutDown();//判断是否进行倒计时
-			    } else if (res.code == 308){
-		          	if(_this.act != {}){
-		            	_this.loadFailFlag=true;
+			        //_this.checkCutDown();//判断是否进行倒计时
+			    } else if (res.code === 308){
+		          	if(_this.state.act !== {}){
+		          		_this.setState({
+		          			loadFailFlag:true
+		          		});
 		          	}
-		          	showAlert({
-		        		cont:'很抱歉，您的附近暂无白拿活动，现在将为您跳转到白拿商城!',
-		        		confirm(){
-		        			_this.$router.push({
-		        				path:'/mall'
-		        			});
-		        		}
-		        	});
+			        showConfirm(_this,'很抱歉，您的附近暂无白拿活动，现在将为您跳转到白拿商城!',()=>{
+			        	_this.props.hostory.push('/mall');
+			        });
 			    }else{
-			        if(_this.act != {}) {
-			            _this.loadFailFlag=true;
+			        if(_this.act !== {}) {
+			            _this.setState({loadFailFlag:true});
 			        }
-			        if (res.desc != '请先注册用户并选择好配送终端。'){
-			            showAlert({cont:res.desc});
+			        if (res.desc !== '请先注册用户并选择好配送终端。'){
+			        	showConfirm(_this,res.desc);
 			        }
 			    }
 			}
-		});*/
+		});	
+	}
+	getQues(data){//从问题对象中获取问题选项
+	    if(data){
+	      	var _answArr = [];
+	      	if(data.answer1){
+	        	_answArr.push(data.answer1);
+	      	}
+	      	if (data.answer2) {
+	        	_answArr.push(data.answer2);
+	      	}
+	      	if (data.answer3) {
+	        	_answArr.push(data.answer3);
+	      	}
+	      	if (data.answer4) {
+	        	_answArr.push(data.answer4);
+	      	}
+	      	if (data.answer5) {
+	        	_answArr.push(data.answer5);
+	      	}
+	      	data.answArr = _answArr;
+	      	return data;
+	    }else{
+	      	return {};
+	    }
+	}
+	selectAnsw(_idx){//选择问题选项
+		this.setState({
+			showTrueAnswFlag:false,
+			selectAnswIndex:_idx
+		});
 	}
 	checkCutDown(){//判断是否进行倒计时
 	    var _usrActSt = this.state.act.usrActSt;
-	    if(_usrActSt == 0){//即将开始
+	    if(_usrActSt === 0){//即将开始
 	      this.activityCutDown();
-	    }else if(_usrActSt==1){//进行中
+	    }else if(_usrActSt===1){//进行中
 	      this.setState({canReceiveFlag:true});
 	      this.activityCutDown();
-	    }else if(_usrActSt == 2){//配送中直接跳转到结果页面
+	    }else if(_usrActSt === 2){//配送中直接跳转到结果页面
 	    }
+	}
+	submitAnsw(){//提交答案
+	    if (this.state.selectAnswIndex + 1 !== this.state.ques.trueAnswer){//答案错误，显示正确答案
+	      	this.setState({showTrueAnswFlag:true});
+	    }else{//答案正确
+	    	this.setState({
+	    		showQuesModalFlag:false
+	    	});
+	      	this.receive();
+	    }
+	}
+	hideQuesModal(){
+	    this.setState({showQuesModalFlag:false});
 	}
 	changeMiddleTabbar(n){//中间商品详情与商品评价切换
 	    this.setState({
@@ -253,28 +210,33 @@ class Activity extends Component{
 	getActImgs() {//获取活动图片
 	    var _bainaData = this.state.act.bainaGoods;
 	    var _bannerImgs = [], _detailImgs = [];
-	    if (_bainaData.goodsActLogo1 && _bainaData.goodsActLogo1 != '') {
+	    if (_bainaData.goodsActLogo1!==undefined && _bainaData.goodsActLogo1 !== '') {
 	      _bannerImgs.push(_bainaData.goodsActLogo1);
 	    }
-	    if (_bainaData.goodsActLogo2 && _bainaData.goodsActLogo2 != '') {
-	      _bannerImgs.push(_bainaData.goodsActLogo2);
+	    if((this.state.act.usrActSt === 4 || this.state.act.usrActSt===5)&&_bainaData.goodsActLogo4){
+	    	_bannerImgs = [_bainaData.goodsActLogo4];
 	    }
-	    if (_bainaData.goodsActLogo3 && _bainaData.goodsActLogo3 != '') {
-	      _bannerImgs.push(_bainaData.goodsActLogo3);
-	    }
-	    if (_bainaData.goodsActLogo4 && _bainaData.goodsActLogo4 != '') {
-	      _bannerImgs.push(_bainaData.goodsActLogo4);
-	    }
-	    if (_bainaData.goodsDtlLogo1 && _bainaData.goodsDtlLogo1 != '') {
+	    /*
+		    if (_bainaData.goodsActLogo2!==undefined && _bainaData.goodsActLogo2 !== '') {
+		      _bannerImgs.push(_bainaData.goodsActLogo2);
+		    }
+		    if (_bainaData.goodsActLogo3!==undefined && _bainaData.goodsActLogo3 !== '') {
+		      _bannerImgs.push(_bainaData.goodsActLogo3);
+		    }
+		    if (_bainaData.goodsActLogo4!==undefined && _bainaData.goodsActLogo4 !== '') {
+		      _bannerImgs.push(_bainaData.goodsActLogo4);
+		    }
+	    */
+	    if (_bainaData.goodsDtlLogo1!==undefined && _bainaData.goodsDtlLogo1 !== '') {
 	      _detailImgs.push(_bainaData.goodsDtlLogo1);
 	    }
-	    if (_bainaData.goodsDtlLogo2 && _bainaData.goodsDtlLogo2 != '') {
+	    if (_bainaData.goodsDtlLogo2!==undefined && _bainaData.goodsDtlLogo2 !== '') {
 	      _detailImgs.push(_bainaData.goodsDtlLogo2);
 	    }
-	    if (_bainaData.goodsDtlLogo3 && _bainaData.goodsDtlLogo3 != '') {
+	    if (_bainaData.goodsDtlLogo3!==undefined && _bainaData.goodsDtlLogo3 !== '') {
 	      _detailImgs.push(_bainaData.goodsDtlLogo3);
 	    }
-	    if (_bainaData.goodsDtlLogo4 && _bainaData.goodsDtlLogo4 != '') {
+	    if (_bainaData.goodsDtlLogo4!==undefined && _bainaData.goodsDtlLogo4 !== '') {
 	      _detailImgs.push(_bainaData.goodsDtlLogo4);
 	    }
 	    this.setState({
@@ -289,26 +251,26 @@ class Activity extends Component{
 	receive(){//申请白拿
 		console.log("receive")
 	    var _this = this;
-	   /* getAjax({
+	    getAjax({
 	    	url:'bainaH5/preOrder',
 	    	params:{
-	    		loginId:_this.$store.state.loginId,
-			 	actId:_this.activityId,
+	    		loginId:_this.props.globalData.loginId,
+			 	actId:_this.state.activityId,
 			 	orderSrc:'7'
 	    	},
 	    	success(res){
 	    		console.log("preOrder:",res);
-	    		if(res.code == 200){
+	    		if(res.code === 200){
 	    			_this.props.history.push('/result?tp=6&aid='+_this.state.act.actId);
-		        }else if(res.code == 304){//其它未领取
+		        }else if(res.code === 304){//其它未领取
 		        	_this.props.history.push('/result?tp=1&aid='+_this.state.act.actId);
-		        }else if(res.code == 307){//商品已领完
+		        }else if(res.code === 307){//商品已领完
 		        	_this.props.history.push('/result?tp=1&aid='+_this.state.act.actId);
 		        }else{
 		          	showConfirm(_this,res.desc);
 		        }
 	    	}
-	    });*/
+	    });
 	}
 	//开箱部分
 	showOpenDoorHelp() {//显示开箱引导弹窗
@@ -324,26 +286,26 @@ class Activity extends Component{
 	    	var hostAddr = _this.state.area.areaNm?_this.state.area.areaNm:'';
 		    fuApp.startScanCode(function(data){
 	          	console.log('startScanCode',data);
-	          	if(data.rspCode == '0000'){
+	          	if(data.rspCode === '0000'){
 	          		_this.setState({
 	          			showOpenDoorProgressFlag:true,
 	          			precent:0
 	          		});
 	          		_this.showOpenDoorProgress();
 	          		var _url = data.content;
-	          		/*getAjax({
+	          		getAjax({
 	          			url:'bainaH5/openBox',
 	          			params:{
-	          				loginId:_this.$store.state.loginId,
-								hostId:data.content,
-								actId:_this.activityId
+	          				loginId:_this.props.globalData.loginId,
+							hostId:data.content,
+							actId:_this.state.activityId
 	          			},
 	          			success(res){
-	          				if (res.code == 200) {
+	          				if (res.code === 200) {
 	          					var _path = '/result?tp=3&aid='+_this.state.activityId;
 	          					_path+='&no='+res.data.orderNo+'&box='+res.data.boxNo;
 	          					_this.props.hostory.push(_path);
-				            } else if (res.code == 500) {
+				            } else if (res.code === 500) {
 				            	showConfirm(_this,res.desc,()=>{
 									_this.props.history.push('/result?tp=4&aid='+_this.state.activityId);
 				            	});
@@ -363,7 +325,7 @@ class Activity extends Component{
 	          				});
 	          				clearInterval(_this.checkPhoneTimer);
 	          			}
-	          		});*/
+	          		});
 	          	}else{
 	          		showConfirm(_this,'扫码失败');
 	          	}
@@ -387,6 +349,7 @@ class Activity extends Component{
 	    }, 100);
 	}
 	jumpIndex(){//跳转到首页
+		console.log("jumpIndex")
 		this.props.history.push('/index');
 	}
 	jumpYz(mid){//点商品图片跳转到有赞页面
@@ -404,7 +367,7 @@ class Activity extends Component{
 	chooseAddress(){
 		console.log("chooseAddress")
 	    this.setState({showAddressModalFlag:false});
-	    if (this.state.area.areaNo != '' && this.state.area.areaNo != undefined && this.state.area.cityCd != '' && this.state.area.cityCd!=undefined) {
+	    if (this.state.area.areaNo !== '' && this.state.area.areaNo !== undefined && this.state.area.cityCd !== '' && this.state.area.cityCd!==undefined) {
 	    	var _path = '/address?cellCd='+this.state.area.areaNo;
 	    	_path+='&cityName='+this.state.area.cityCd+'&cellNm='+this.state.area.areaNm;
 	    	_path+='&hostId='+this.state.hostId;
@@ -413,18 +376,19 @@ class Activity extends Component{
 	    	this.props.history.push('/address');
 	    }
 	}
-	checkEvent(st){//点击底部按钮，确定事件
-	    if (st == 1){
+	checkEvent(){//点击底部按钮，确定事件
+		var st = this.state.act.usrActSt;
+	    if (st === 1){
 	      	if (this.state.canReceiveFlag) {//可以领取
-		        if (this.state.act.goodsNumLeft==0){
-		          	// showAlert({cont:"抱歉，您申请的活动已被领完!"});
+		        if (this.state.act.goodsNumLeft===0){
+		          	showAlert({cont:"抱歉，您申请的活动已被领完!"});
 		        }else{
 		          	this.receive();
 		        }
 	      	}else{
-	        	// showAlert({cont:'活动还未开始，请耐心等待。'});
+	        	showAlert({cont:'活动还未开始，请耐心等待!'});
 	      	}
-	    } else if (st == 3) {
+	    } else if (st === 3) {
 	      	this.showOpenDoorHelp();
 	    }
 	}
@@ -433,9 +397,9 @@ class Activity extends Component{
 	    var _usrActSt = this.state.act.usrActSt;
 	    var _cutDownTime = '';
 	    var _time = '';
-	    if (_usrActSt == 0) {//即将开始
+	    if (_usrActSt === 0) {//即将开始
 	      	_time = _this.state.act.actStartTs;
-	    } else if (_usrActSt == 1) {//进行中
+	    } else if (_usrActSt === 1) {//进行中
 	      	_time = _this.state.act.actEndTs
 	    }
 	    down();
@@ -443,10 +407,10 @@ class Activity extends Component{
 	      	clearTimeout(_this.activityTimer);
 	      	var _diffTime = getDiffTime(_time);
 	      	//console.log("diffTime:", _diffTime)
-	      	if (_diffTime.day == 0 && _diffTime.hour == 0 && _diffTime.minute == 0 && _diffTime.second == 0) {
+	      	if (_diffTime.day === 0 && _diffTime.hour === 0 && _diffTime.minute === 0 && _diffTime.second === 0) {
 	        	//console.log("结束了");
 	        	clearTimeout(_this.activityTimer);
-		        _this.setStat({
+		        _this.setState({
 		        	actCutDownObj:{//活动倒计时信息
 				        day: 0,
 				        hour: 0,
@@ -454,7 +418,7 @@ class Activity extends Component{
 				        second: 0
 				    }
 				});
-		        if (_usrActSt == 0) {//即将开始状态倒计时结束变为进行中状态
+		        if (_usrActSt === 0) {//即将开始状态倒计时结束变为进行中状态
 		          	var _act = _this.state.act;
 		          	_act.usrActSt = 1;
 		          	_this.setState({
@@ -462,7 +426,7 @@ class Activity extends Component{
 		          		canReceiveFlag:true
 		          	});
 		          	_this.activityCutDown();
-		        } else if (_usrActSt == 1) {
+		        } else if (_usrActSt === 1) {
 		          	var _act = _this.state.act;
 		          	_act.usrActSt = 5;
 		          	_this.setState({
@@ -498,18 +462,108 @@ class Activity extends Component{
 	confirm(){
 		console.log("confirm");
 	}
+	createImgs(){
+		var imgsDom = [];
+		if(this.state.middleTabbarActiveIndex===1){
+			this.state.detailImgs.map((item,index)=>{
+				imgsDom.push(
+					<img onClick={()=>{this.jumpYz('detail_'+index)}} key={index} src={this.state.imgPre+item} alt=""/>
+				)
+			});
+		}
+		return imgsDom;
+	}
+	createQuesItem(){
+		// console.log("createQuesItem:",this.state.ques.answArr,typeof this.state.ques.answArr)
+		var _quesItem = [];
+		if(this.state.ques.answArr){
+			this.state.ques.answArr.map((item,index) => {
+				_quesItem.push(
+					<span key={index} className={this.state.selectAnswIndex==index?'active answ_item':'answ_item'} onClick={()=>{this.selectAnsw(index)}} >{item}</span>
+				)
+			});
+		}
+		return _quesItem;
+	}
 	render(){
 		return(
-			<div>
-			{
-				this.state.showModal?
-				<ConfirmExampleConfirm cont={this.state.modalCont} cancel={()=>{this.state.cancelFn()}} confirm={()=>{this.state.confirmFn()}} />
-				:''
-			}
+			<div className='container' v-if="!loadFailFlag">
+				<div className='act_banner' >
+			        <img onClick={()=>{this.jumpYz}} src={this.state.imgPre+this.state.bannerImgs[0]} className="slide-image"/>
+			  	</div>
+			  	<div className='activity_nums_left'>
+				    <div className='activity_nums_left_top'>
+				      <div className='activity_nums_precent_wrapper'>
+				        <span className='activity_nums_precent' 
+				        	style={{width:(this.state.act.goodsNum-this.state.act.goodsNumLeft)/this.state.act.goodsNum*100+'%'}}></span>
+				      </div>
+				      <span className='activity_nums_tip'>领完发货</span>
+				    </div>
+				    <div className='activity_nums_left_bottom'>剩余{this.state.act.goodsNumLeft?this.state.act.goodsNumLeft:0}份</div>
+				</div>
+				<div className='activity_name'>{this.state.act.actNm}</div>
+				<div className='padding_10'></div>
+					<div className='good_detail clearfix'>
+					{
+						this.state.actRecommandImg?<img onClick={()=>{this.jumpYz}} src={this.state.imgPre+this.state.actRecommandImg}/>:''
+					}
+					{
+						this.createImgs()
+					}
+		  		</div>
+		  		<div className='footer_padding'></div>
+		  		<div className='footer'>
+			    	<div onClick={()=>{this.jumpYZPage()}} className='footer_tabbar_item left'>{this.state.act.applySuccBt}</div>
+			      	<div onClick={()=>{this.jumpIndex()}} className='footer_tabbar_item right'>更多白拿</div>
+			      	{
+			      		this.state.act.usrActSt == 0 ?
+			      			<button onClick={()=>{this.checkEvent(this.state.act.usrActSt)}} className="footer_btn disabled">白拿</button>
+			      		: this.state.act.usrActSt == 1 ?
+			      			<button onClick={()=>{this.checkEvent(this.state.act.usrActSt)}} className="footer_btn">白拿</button>
+			      		: this.state.act.usrActSt == 2?
+			      		<button onClick={()=>{this.checkEvent(this.state.act.usrActSt)}} className='footer_btn disabled'>您已申请</button> 
+						: this.state.act.usrActSt == 3 ?
+						<button onClick={()=>{this.checkEvent(this.state.act.usrActSt)}} className='footer_btn'>扫码领取</button>
+						: this.state.act.usrActSt == 4 || this.state.act.usrActSt == 5 ?
+						<button onClick={()=>{this.checkEvent(this.state.act.usrActSt)}} className='footer_btn disabled'>申请结束</button>
+						:''
+			      	}
+			  	</div>
+			  	<div onClick={()=>{this.showActRuleModal}} className="act_rule">
+				    <img src={require('./act_rule.png')} />
+				</div>
+				{
+					this.state.showQuesModalFlag?
+						<div onClick={()=>{this.hideQuesModal}} className='ques_wrapper'>
+					  	<div onClick={()=>{this.preventD}} className='ques_cont clearfix'>
+					    	<span className='ques_title'>{this.state.ques.question}</span>
+						    <div className='answs clearfix'>
+						      	{this.createQuesItem()}
+						    </div>
+						    {
+						    	this.state.showTrueAnswFlag?
+						    	<div className='answ_correct clearfix'>
+								  	<span>您的回答不正确，请重新选择</span>
+								  	<span>正确答案：{this.state.ques.answArr[this.state.ques.trueAnswer-1]}</span>
+								</div>
+								:''
+						    }
+						    <div className='ques_submit_btn'>
+						      	<button onClick={()=>{this.submitAnsw()}} >提交</button>
+						    </div>
+					  	</div>
+					</div>
+					:''
+				}
+				
 			</div>
 		)
 	}
 }
+/*
+
+
+ */
 const mapStateToProps = function(store){
 	return{
 		globalData:store.globalData

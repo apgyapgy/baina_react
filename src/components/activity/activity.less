@@ -1,0 +1,315 @@
+.padding_10{
+	  	width:100%;
+	  	height:.20rem;
+	}
+	.banner{
+	  	float: left;
+	  	margin-top:.2rem;
+	  	width: 100%;
+	  	height:3.7rem; 
+	  	.slide-image{
+		  	width:100%;
+		  	height:3.7rem;
+		} 
+	}
+	.activity_banner{
+	  	width: 100%;
+	  	float: left;
+	  	height:5rem;   
+	  	.swiper_item{
+		  	.slide-image{
+			  	width: 100%;
+			}
+		} 
+	}
+	/*倒计时  */
+	.countdown{
+	  	width:100%;
+	  	float: left;
+	  	height:.84rem;
+	  	background:#fbebea;
+	  	text-indent:.30rem;
+	  	font-size:.34rem;
+	  	line-height:.84rem;
+	  	color:#d83c2e;
+	  	text-align:left;
+	}
+	/*商品详情  */
+	.good_info_wrapper{
+	  	width:100%;
+	  	padding-top:.25rem;
+	  	min-height:1.90rem; 
+	  	.good_info_left{
+		  	float:left;
+		  	margin-left:.25rem;
+		  	width:4.20rem;
+		  	text-align:left;
+		  	.good_num{
+			  	height:.48rem;
+			  	line-height:.48rem;
+			  	color:#ababab;
+			  	font-size:.34rem;
+			  	span{
+				  	font-size:.34rem;
+				  	color:#de4d32;
+				}
+			}
+			.good_price{
+			  	width:100%;
+			  	height:.38rem;
+			  	line-height:.38rem;
+			  	font-size:.24rem;
+			  	color:#878787;
+			  	text-decoration: line-through;
+			}
+			.good_name{
+			  	width:100%;
+			  	line-height:.50rem;
+			  	font-size:.34rem;
+			  	color:#000;
+			}
+		}
+		/*柜子布放地  */
+		.good_info_right{
+		  	float:right;
+		  	width:2.50rem;
+		  	height:1.90rem;
+		  	.cabinet_title_1,.cabinet_title_2{
+			  	width:100%;
+			  	height:.38rem;
+			  	line-height:.38rem;
+			  	font-size:.24rem;
+			}
+			.cabinet_title_1{
+			  	margin-top:.12rem;
+			  	color:#878787;
+			  	text-align:justify;
+			}
+			.cabinet_title_2{
+				text-align:left;
+			  	color:#aaa;
+			}
+			.cabinet_area{
+		  		width:2.20rem;
+			  	height:.48rem;
+			  	background:#d83d2e;
+			  	border-radius:.06rem;
+			  	color:#fff;
+			  	text-align:center;
+			  	line-height: .48rem;
+			  	font-size:.24rem;
+			  	word-break:break-all;
+			  	.cabinet_icon{
+				  	margin-left:.15rem;
+				  	margin-top:.12rem;
+				  	float:left;
+				  	width:.20rem;
+				  	height:.24rem;
+				}
+				.cabinet_arrow{
+				  	float:right;
+				  	margin-right:.15rem;
+				  	margin-top:.18rem;
+				  	width:.24rem;
+				  	height:.16rem;
+				}
+			}
+		}
+	}
+	.activity_name{
+	  	margin:0 auto;
+	  	width:6.5rem;
+	  	line-height:.5rem;
+	  	font-size:.3rem;
+	  	font-weight:bold;
+	  	color:#070707;
+	  	white-space: no-wrap;
+	  	overflow: hidden;
+	  	text-overflow: ellipsis;
+	  	text-align:left;
+	}
+	/*中间tabbar，商品详情，商品评价  */
+	.middle_tabbar{
+	  	position:relative;
+	  	width:100%;
+	  	height:1rem;
+	  	border-bottom:1px solid #f2f2f2;
+	  	.tabbar_item{
+		  	float:left;
+		  	width:50%;
+		  	height:1rem;
+		  	text-align:center;
+		  	color:#5e5e5e;
+		  	line-height:1rem;
+		  	font-size:.36rem;
+		  	background:#fff;
+		  	border:0;
+		  	&.active{
+			  	color:#de4d32;
+			}
+		}
+		.back{
+		  	position:absolute;
+		  	left:50%;
+		  	top:50%;
+		  	transform: translate(-50%,-50%);
+		  	width:1px;
+		  	height:.36rem;
+		  	background:#e6e6e6;
+		}
+	}
+	/* 商品详情  */
+	.good_detail img{
+	  float:left;
+	  width:100%;
+	}
+	/*底部  */
+	.footer{
+	  	position:fixed;
+	  	left:0;
+	  	bottom:0;
+	  	width:100%;
+	  	height:.96rem;
+	  	line-height:.96rem;
+	  	font-size:.36rem;
+	  	color:#fff;
+	  	background:#f4c046;
+	  	.footer_tabbar_item{
+		  	width:2.80rem;
+		  	height:.96rem;
+		  	text-align:center;
+		  	color:#fff;
+		  	&.left{
+  				float:left;
+			}
+			&.right{
+			  	float:right;
+			}
+		} 
+		.footer_btn{
+		  	display:flex;
+		  	padding:0 .45rem;
+		  	position:absolute;
+		  	left:50%;
+		  	bottom:0;
+		  	transform: translateX(-50%);
+		  	width:1.70rem;
+		  	height:1.70rem;
+		  	border-radius:50%;
+		  	background:#de4c32;
+		  	line-height:.50rem;
+		  	font-size:.40rem;
+		  	color:#fff;
+		  	text-align:center;
+		  	align-items:center;
+		  	box-shadow:2px 2px 2px rgba(222,76,50,.5),-2px 2px 2px rgba(222,76,50,.5);
+		  	box-sizing:border-box;
+		  	border:0;
+		  	&.disabled{
+			  	background:#d8d8d8;
+			  	color:#fff;
+			  	box-shadow:2px 2px 2px rgba(216,216,216,.5),-2px 2px 2px rgba(216,216,216,.5);
+			}
+		}
+	}
+	.footer_padding{
+	  width:100%;
+	  height:.96rem;
+	}
+	.good_comment{
+	  	margin-top:.60rem;
+	  	width:100%;
+	  	height:.60rem;
+	  	font-size:.34rem;
+	  	line-height:.60rem;
+	  	text-align:center;
+	  	color:#5e5e5e;
+	} 
+	/* 请求成功前显示白色空白页  */
+	.white_page{
+	  	position:fixed;
+	  	left:0;
+	  	top:0;
+	  	right:0;
+	  	bottom:0;
+	  	width:100%;
+	  	height:100%;
+	  	background:#fff;
+	}
+	/* 问题 */
+	.ques_wrapper{
+	  	position:fixed;
+	  	left:0;
+	  	right:0;
+	  	top:0;
+	  	bottom:0;
+	  	width:100%;
+	  	height:100%;
+	  	background:rgba(0,0,0,.1);
+	  	.ques_cont{
+		  	padding:0 .70rem;
+		  	margin:2.60rem auto 0;
+		  	width:6.40rem;
+		  	background:#fff;
+		  	border-radius:.10rem;
+		  	box-sizing:border-box;
+		  	.ques_title{
+			  	margin-top:.30rem;
+			  	float:left;
+			  	width:100%;
+			  	line-height:.56rem;
+			  	font-size:.36rem;
+			  	color:#1d1d1d;
+			}
+			.answs{
+			  	float:left;
+			  	margin:0 auto;
+			  	width:5rem;
+			}
+			.answ_item{
+			  	float:left;
+			  	margin-top:.30rem;
+			  	width:100%;
+			  	height:.68rem;
+			  	border-radius:.10rem;
+			  	border:1px solid #7d7d7d;
+			  	color:#7d7d7d;
+			  	font-size:.30rem;
+			  	line-height:.68rem;
+			  	text-align:center;
+			  	&.active{
+				  	background:#f90;
+				  	color:#fff;
+				 	 border:1px solid #f90;
+				}
+			}
+			.answ_correct{
+			  	float:left;
+			  	margin-top:.30rem;
+			  	width:100%;
+			  	span{
+			  		display:block;
+				  	line-height:.40rem;
+				  	font-size:.26rem;
+				  	color:#1d1d1d;
+				  	text-align:left;
+			  	}
+			}
+			.ques_submit_btn{
+			  	float:left;
+			  	margin:.30rem auto .30rem;
+			  	width:100%;
+			  	height:.60rem;
+			  	button{
+			  		display:block;
+				  	margin:0 auto;
+				  	width:2.02rem;
+				  	height:.60rem;
+				  	line-height:.60rem;
+				  	background:#f90;
+				  	color:#fff;
+				  	border-radius:.10rem;
+				}
+			}
+		}
+	}

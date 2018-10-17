@@ -41,8 +41,9 @@
 				var obj = {
 					rspCode:"0000",
 					rspDesc:"成功",
-					loginId:"13625625040",
-					mobile:"13625625040",userName:"jane",
+					loginId:"15316117950",
+					mobile:"15316117950",
+					userName:"jane",
 					ticket:"001",networkType:"1"
 				};
 				success(obj);

@@ -1,4 +1,4 @@
-/*头部  */
+
 .header{
   	position:relative;
   	width:100%;
@@ -35,6 +35,20 @@
   	right:.2rem;
   	width:1rem;
   	height:.7rem;  	
+}
+.header .user_icon_wrapper span{
+    position: absolute;
+    right: .05rem;
+    top: .1rem;
+    display: block;
+    width: .3rem;
+    height: .3rem;
+    line-height: .35rem;
+    text-align:center;
+    border-radius: 50%;
+    background: #f00;
+    color: #fff;
+    font-size: .2rem;
 }
 .header .user_icon_wrapper .user_icon{
   	display:block;
@@ -197,106 +211,6 @@
 .acts .act .act_nums .act_apply_nums{
   	float:right;
 }
-
-	
-/* 白拿优品  */
-.bnyp_wrapper{
-  	margin:.3rem auto 0;
-  	width:7rem;
-}
-.bnyp_wrapper .bnyp_goods{
-	width:7rem;
-}
-.bnyp_wrapper .bnyp_head{
-	width:100%;
-	height:.70rem;
-}
-.bnyp_wrapper .bnyp_head img{
-  	display:block;
-  	margin:0 auto;
-  	width:2.66rem;
-  	height:.66rem;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good{
-  	float:left;
-  	margin-top:.20rem;
-  	width:7rem;
-  	background:#fff;
-  	box-shadow:3px 0 3px rgba(204,204,204,.1),-3px 0 3px rgba(204,204,204,.1),0 3px 3px rgba(204,204,204,.1),0 -3px 3px rgba(204,204,204,.1);
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_img{
-  	float:right;
-  	margin-right:.30rem;
-  	padding:.10rem 0;
-  	width:1.80rem;
-  	height:1.80rem;
-  	border-radius:.05rem;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left{
- 	margin-left:.20rem;
-  	margin-bottom:.20rem;
-  	float:left;
-  	width:4.20rem;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_name{
-  	margin-top:.30rem;
-  	display:flex;
-  	width:100%;
-  	line-height:.36rem;
-  	font-size:.28rem;
-  	color:#222126;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_name .bnyp_good_name_1{
-  	float:left;
-  	flex:1;
-  	text-align:left;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_name .bnyp_good_name_1{
-  	float:left;
-  	flex:1;
-  	text-align:left;
-}
-.bnyp_goods .bnyp_good .bnyp_left .bnyp_good_name .bnyp_good_discount{
-  float:left;
-  margin-top:.05rem;
-  margin-right:5px;
-  padding:0 .1rem;
-  height:.26rem;
-  line-height:.26rem;
-  font-size:.2rem;
-  color:#fff;
-  background:linear-gradient(to right,#ff8f24,#ff7f1f,#ff6818);
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_nums{
-  	margin-top:.30rem;
-  	width:100%;
-  	height:.40rem;
-  	line-height:.40rem;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_nums .bnyp_good_price{
-  	float:left;
-  	padding-right:.10rem;
-  	color:#000;
-  	font-size:.30rem;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_nums .bnyp_good_price b{
-	padding-left:.10rem;
-	color:#de4d32;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_nums .bnyp_good_origin_price{
-  	float:left;
-  	font-size:.20rem;
-  	color:#ababab;
-  	text-decoration: line-through;
-}
-.bnyp_wrapper .bnyp_goods .bnyp_good .bnyp_left .bnyp_good_nums .bnyp_good_coupon{
-  	float:right;
-  	padding:0 .10rem;
-  	height:.40rem;
-    background:linear-gradient(to bottom,#fcc126,#fead14,#fe9a00);
-  	font-size:24rem;
-  	color:#fff;
-}
 /* 底部留30像素距离  */
 .padding_30{
   width:100%;
@@ -346,7 +260,7 @@
   	display:block;
   	margin:0 auto;
  	width:6.50rem;
-  	height:6.50rem;
+  height:6.50rem;
 }
 .recommend_modal_wrapper .recommend .recommend_close{
   	position:absolute;
@@ -356,3 +270,74 @@
   	width:.40rem;
   	height:.40rem;
 }
+
+/*白拿优品*/
+.bnyp_wrapper{
+  margin:0 auto;
+  width:7.1rem;
+}
+.bnyp_wrapper .bnyp_good{
+  position:relative;
+  float:left;
+  margin-bottom:.20rem;
+  margin-right:.15rem;
+  width:3.45rem;
+  height:5.63rem;
+  background:#fff;
+}
+.bnyp_wrapper .bnyp_good:nth-child(2n){
+  margin-right:0;
+}
+.bnyp_wrapper .bnyp_img{
+  display:block;
+  width:3.45rem;
+  height:3.45rem;
+}
+.bnyp_wrapper .bnyp_good_name{
+  margin:.15rem auto 0;
+  width:3.10rem;
+  height:.64rem;
+  line-height:.34rem;
+  font-size:.28rem;
+  color:#282828;
+  text-align:left;
+  overflow:hidden; 
+  text-overflow:ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2; 
+}
+.bnyp_wrapper .bnyp_good_price,.bnyp_wrapper .bnyp_good_origin_price{
+  display:block;
+  margin:0 auto;
+  width:3.10rem;
+  text-align:left;
+}
+.bnyp_wrapper .bnyp_good_price{
+  margin-top:.20rem;
+  height:.50rem;
+  line-height:.50rem;
+  font-size:.30rem;
+  color:#fe7000;
+}
+.bnyp_wrapper .bnyp_good_origin_price{
+  height:.44rem;
+  line-height:.44rem;
+  color:#d9d9d9;
+  font-size:.24rem;
+}
+.bnyp_wrapper .bnyp_icon{
+  position:absolute;
+  right:.10rem;
+  bottom:.20rem;
+  width:.70rem;
+  height:.70rem;
+}
+.bnyp_wrapper .load_all{
+  display:block;
+  width:100%;
+  height:.8rem;
+  font-size:.28rem;
+  color:#858585;
+}
+

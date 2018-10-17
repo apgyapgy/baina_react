@@ -2,14 +2,17 @@
     function resize() {
         var domWidth = domEle.getBoundingClientRect().width;
         if(domWidth / v > 750){
-            //alert(1)
             domWidth = 750 * v;
         }
         win.rem = domWidth / 7.5;
-//        domEle.style.fontSize = win.rem + "px";
+        //domEle.style.fontSize = win.rem + "px";
         document.getElementsByTagName('html')[0].style.fontSize = win.rem + 'px';
     }
-    var v, initial_scale, timeCode, dom = win.document, domEle = dom.documentElement, viewport = dom.querySelector('meta[name="viewport"]'), flexible = dom.querySelector('meta[name="flexible"]');
+    var v, initial_scale, timeCode, 
+        dom = win.document, 
+        domEle = dom.documentElement, 
+        viewport = dom.querySelector('meta[name="viewport"]'), 
+        flexible = dom.querySelector('meta[name="flexible"]');
     if (viewport) {
         //viewport：<meta name="viewport"content="initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5,user-scalable=no,minimal-ui"/>
         var o = viewport.getAttribute("content").match(/initial\-scale=(["']?)([\d\.]+)\1?/);
@@ -27,13 +30,17 @@
         }
     }
     if (!v && !initial_scale) {
-        var n = (win.navigator.appVersion.match(/android/gi), win.navigator.appVersion.match(/iphone/gi));
+        var n = (win.navigator.appVersion.match(/android/gi), 
+            win.navigator.appVersion.match(/iphone/gi));
         v = win.devicePixelRatio;
         v = n ? v >= 3 ? 3 : v >= 2 ? 2 : 1 : 1, initial_scale = 1 / v
     }
     //没有viewport标签的情况下
     if (domEle.setAttribute("data-dpr", v), !viewport) {
-        if (viewport = dom.createElement("meta"), viewport.setAttribute("name", "viewport"), viewport.setAttribute("content", "initial-scale=" + initial_scale + ", maximum-scale=" + initial_scale + ", minimum-scale=" + initial_scale + ", user-scalable=no"), domEle.firstElementChild) {
+        if (viewport = dom.createElement("meta"), 
+            viewport.setAttribute("name", "viewport"), 
+            viewport.setAttribute("content", "initial-scale=" + initial_scale + ", maximum-scale=" + initial_scale + ", minimum-scale=" + initial_scale + ", user-scalable=no"), domEle.firstElementChild
+        ) {
             domEle.firstElementChild.appendChild(viewport)
         } else {
             var m = dom.createElement("div");

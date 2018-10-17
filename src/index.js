@@ -4,6 +4,7 @@ import { BrowserRouter,Route  } from 'react-router-dom';
 import './index.css';
 // import 'zent/css/index.css';
 import './css/common.css';
+import 'antd-mobile/dist/antd-mobile.css';
 import './js/fontSize.js';
 // import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -14,15 +15,15 @@ import Index from './components/index/index.js';
 import Mall from './components/mall/mall.js';
 import Result from './components/result/result.js';
 import MyActs from './components/myActs/myActs.js';
-import { Provider, connect } from 'react-redux';
+import MoreActs from './components/moreActs/moreActs';
+import { Provider } from 'react-redux';
 import store from './reducer/store.js';
-
-import 'semantic-ui-css/semantic.min.css';
+// import 'semantic-ui-css/semantic.min.css';
 // import fuApp from './js/libs/fuapp.js';
 // window.fuApp = fuApp;
 // 注册事件，调原生接口必用
 var isDebug = false;//true测试环境,false生产环境
-if(window.location.origin == 'http://localhost:3000' || window.location.origin == 'http://192.168.42.33'){
+if(window.location.origin === 'http://localhost:3000' || window.location.origin === 'http://192.168.42.33'){
   isDebug = true;
 }
 window.registerDeviceready = function (devicereadyEvent) {
@@ -48,6 +49,7 @@ ReactDOM.render(
 		    	<Route path='/mall'  component={Mall}/>
 		    	<Route path='/result'  component={Result}/>
 		    	<Route path='/myActs'  component={MyActs}/>
+		    	<Route path="/MoreActs" component={MoreActs}/>
 		  	</div>
 		</BrowserRouter>
 	</Provider>, 
